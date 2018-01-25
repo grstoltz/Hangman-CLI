@@ -2,78 +2,77 @@ var Word = require("./word.js")
 
 var randomwords = require("random-words")
 
-var App = function(){
+var App = function () {
     this.state = "active"
-    this.word = new Word (randomwords())
+    this.word = new Word(randomwords())
     this.guessedLetters = []
     this.counter = 10
-    this.userGuess = function(guess){
-        
-        if (this.guessedLetters.includes(guess)){
+    this.userGuess = function (guess) {
+        //Looks at the array of guessed letters to see if it has been guessed, if it has it tells the user to try another guess
+        if (this.guessedLetters.includes(guess)) {
             this.guessedAnswer();
         }
-        else if (this.word.wordArray.some(function(e){
+        //If the letter has not been guessed it checks the over the letters in the word to see if it is in the word
+        //If the letter is in the word it sets the value of guessed to true
+        else if (this.word.wordArray.some(function (e) {
             return e.letter === guess
-        })){
-            this.word.wordArray.forEach(function(element){
-                if (element.letter === guess){
+        })) {
+            this.correctAnswer();
+            this.word.wordArray.forEach(function (element) {
+                if (element.letter === guess) {
                     element.guessed = true
                 }
             });
         }
-        else { 
+        //If the letter has not been guessed or if it is not in the word, it informs the user their answer is inorrect and decrements counter by 1
+        else {
             this.incorrectAnswer()
         }
+        //Takes the guessed letter and puts it into the array
         this.guessedLetters.push(guess)
-        if (!this.word.wordArray.some(function(e){
+
+        //Checks over the status of each letter in the word array, if each letter has a guessed value of true, the user has won the game
+        if (!this.word.wordArray.some(function (e) {
             return e.guessed === false
-        })){
+        })) {
             this.winGame();
         }
 
     }
-    this.displayBoard = function (){
+    this.displayBoard = function () {
         var board = '';
-        this.word.wordArray.forEach(function(element){
+        this.word.wordArray.forEach(function (element) {
             board += ' ' + element.displayLetter();
         })
-        console.log(board)
+        console.log("\n" + board + "\n")
     }
-    this.correctAnswer = function (){
-        console.log("Correct answer")
+    this.correctAnswer = function () {
+        console.log("\n Correct answer")
     }
-    this.incorrectAnswer = function (){
-        this.counter --
-        console.log("Incorrect answer! You have " + this.counter + " guesses remaining")
-        if (this.counter >= 0){
-            this.loseGame
+    this.incorrectAnswer = function () {
+        this.counter--
+        if (this.counter == 0) {
+            this.loseGame();
+        }
+        else {
+            console.log("\n Incorrect answer! You have " + this.counter + " guesses remaining.")
         }
     }
-    this.guessedAnswer = function(){
-        console.log("You've already guessed that")
+    this.guessedAnswer = function () {
+        console.log("\n You've already guessed that")
     }
-    this.loseGame = function (){
-        console.log("You Lose")
+    this.loseGame = function () {
+        console.log("\n You Lose!")
         this.state = "lost"
     }
-    this.winGame = function(){
-        console.log("Congrats you've won!")
+    this.winGame = function () {
+        console.log("\n Congrats you've won!")
         this.state = "won"
     }
+    this.endGame = function () {
+        console.log("\n Goodbye!")
+        process.exit(0)
+    }
 }
-
-// var game = new App();
-
-// game.userGuess("t")
-
-// game.userGuess("t")
-
-// //console.log(word.wordArray)
-
-// //console.log(word.wordArray[1].displayLetter())
-
-// game.displayBoard();
-
-// game.incorrectAnswer();
 
 module.exports = App;
