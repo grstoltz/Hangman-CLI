@@ -18,7 +18,7 @@ var init = function () {
                     name: "guess"
                 }
             ]).then(function (response) {
-                var guess = response.guess
+                var guess = response.guess.toLowerCase();
                 game.userGuess(guess);
                 game.displayBoard();
 
@@ -36,7 +36,7 @@ var init = function () {
 
                 if (user.response) {
 
-                    main();
+                    init();
                 }
                 else {
                     game.endGame()
