@@ -1,0 +1,23 @@
+{
+  "name": "hangman-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grstoltz/Hangman-CLI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grstoltz/Hangman-CLI/issues"
+  },
+  "homepage": "https://github.com/grstoltz/Hangman-CLI#readme",
+  "dependencies": {
+    "inquirer": "^5.0.1",
+    "random-words": "0.0.1"
+  }
+}
